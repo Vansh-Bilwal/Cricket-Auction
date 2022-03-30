@@ -1,9 +1,9 @@
-import io from "socket.io-client";
+import io from 'socket.io-client';
 
 const url =
-  process.env.NODE_ENV === "production"
-    ? "https://ipl-mega-auction.herokuapp.com/"
-    : "http://localhost:8000/";
+  process.env.NODE_ENV === 'production'
+    ? 'https://bidshot.herokuapp.com/'
+    : 'http://localhost:8000/';
 let socket;
 
 const connect = () => {
@@ -14,7 +14,7 @@ const join = (roomName, username) => {
   if (!socket) {
     connect();
   }
-  socket.emit("joinAuction", {
+  socket.emit('joinAuction', {
     username,
     roomName,
   });
@@ -24,11 +24,11 @@ const create = (roomName, username) => {
   if (!socket) {
     connect();
   }
-  socket.emit("createAuction", {
+  socket.emit('createAuction', {
     username,
     roomName,
   });
 };
 
-socket.on("joinAuction", () => {});
+socket.on('joinAuction', () => {});
 export { create, join };

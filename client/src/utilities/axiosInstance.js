@@ -1,9 +1,9 @@
-const axios = require("axios");
+const axios = require('axios');
 
 const url =
-  process.env.NODE_ENV === "production"
-    ? "https://ipl-mega-auction.herokuapp.com/"
-    : "http://localhost:8000/";
+  process.env.NODE_ENV === 'production'
+    ? 'https://bidshot.herokuapp.com/'
+    : 'http://localhost:8000/';
 
 const axiosInstance = axios.create({
   withCredentials: true,

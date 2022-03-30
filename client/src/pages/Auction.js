@@ -1,47 +1,47 @@
 //Hooks
-import { useEffect, useState, useContext } from "react";
-import { UserContext } from "../hooks/UserContext";
+import { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../hooks/UserContext';
 
 // Components
-import JoinAuction from "../components/JoinAuction";
-import CreateAuction from "../components/CreateAuction";
-import Game from "../components/Game";
-import Lobby from "../components/Lobby";
-import Loader from "./Loading";
+import JoinAuction from '../components/JoinAuction';
+import CreateAuction from '../components/CreateAuction';
+import Game from '../components/Game';
+import Lobby from '../components/Lobby';
+import Loader from './Loading';
 
-import io from "socket.io-client";
+import io from 'socket.io-client';
 
 const url =
-  process.env.NODE_ENV === "production"
-    ? "https://ipl-mega-auction.herokuapp.com/"
-    : "http://localhost:8000/";
+  process.env.NODE_ENV === 'production'
+    ? 'https://bidshot.herokuapp.com/'
+    : 'http://localhost:8000/';
 
 const Auction = (props) => {
   const { user } = useContext(UserContext);
   const [socket] = useState(io(url));
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState('');
   const [loading, setLoading] = useState(false);
   const [play, setPlay] = useState(false);
   const [main, setMain] = useState(false);
   const [errors, setErrors] = useState({
-    form: "",
-    room: "",
-    lobby: "",
+    form: '',
+    room: '',
+    lobby: '',
   });
   const [users, setUsers] = useState([]);
   const [created, setCreated] = useState(false);
   const [join, setJoin] = useState(false);
   const [initial, setInitial] = useState(true);
-  const [defaultPlayer, setDefaultPlayer] = useState("");
+  const [defaultPlayer, setDefaultPlayer] = useState('');
 
   useEffect(() => {
-    socket.emit("check-user", {
+    socket.emit('check-user', {
       user: user,
     });
   }, [socket, user]);
 
   useEffect(() => {
-    socket.on("existing-user", (data) => {
+    socket.on('existing-user', (data) => {
       setUsers(data.users);
       setRoom(data.room);
       setInitial(false);
@@ -54,11 +54,11 @@ const Auction = (props) => {
       }
     });
 
-    socket.on("no-existing-user", () => {
+    socket.on('no-existing-user', () => {
       setInitial(false);
     });
 
-    socket.on("join-result", (message) => {
+    socket.on('join-result', (message) => {
       console.log(message);
       if (message.success) {
         console.log(message);
@@ -71,19 +71,19 @@ const Auction = (props) => {
       }));
     });
 
-    socket.on("start", () => {
+    socket.on('start', () => {
       setPlay(true);
     });
   }, [socket, user, users]);
 
   useEffect(() => {
-    socket.on("users", (data) => {
+    socket.on('users', (data) => {
       setUsers(data.users);
     });
   }, [user, socket]);
 
   return (
-    <div className="auction">
+    <div className='auction'>
       {initial ? (
         <Loader />
       ) : play ? (
