@@ -1,12 +1,12 @@
-const User = require("./user");
-const dbUser = require("../database/models/user.model");
+const User = require('./user');
+const dbUser = require('../database/models/user.model');
 
 class Auction {
   constructor(room) {
     this.users = [];
-    this.currentBidder = "";
+    this.currentBidder = '';
     this.currentBid = 3.8;
-    this.currentPlayer = "";
+    this.currentPlayer = '';
     this.timer = 10;
     this.interval = null;
     this.room = room;
@@ -31,13 +31,13 @@ class Auction {
     const user = this.findUser(bidder);
 
     if (user.budget <= this.currentBid + 0.2) {
-      return socket.emit("bid-error", {
-        message: "The current bid exceeds your budget.",
+      return socket.emit('bid-error', {
+        message: 'The current bid exceeds your budget.',
       });
     }
     if (user.players.length >= 11) {
-      return socket.emit("bid-error", {
-        message: "Max players limit reached.",
+      return socket.emit('bid-error', {
+        message: 'Max players limit reached.',
       });
     }
     this.currentBid += 0.2;
@@ -56,7 +56,7 @@ class Auction {
   servePlayer(squads) {
     const player = squads[this.squad].players[this.player];
     this.currentPlayer = player;
-    this.room.emit("player", {
+    this.room.emit('player', {
       player,
     });
   }
@@ -75,13 +75,13 @@ class Auction {
 
   displayBidder() {
     const currentBidder = this.getCurrentBid();
-    this.room.emit("bid", {
+    this.room.emit('bid', {
       currentBidder,
     });
   }
 
   resetBid(squads) {
-    this.currentBidder = "";
+    this.currentBidder = '';
 
     squads[this.squad].players[this.player].stats.batting
       ? (this.currentBid =
@@ -120,7 +120,7 @@ class Auction {
     }
     const time = this.timer;
     const room = this.room;
-    room.emit("display", {
+    room.emit('display', {
       time,
     });
     this.timer--;
@@ -133,7 +133,7 @@ class Auction {
       this.squad++;
       if (squads.length === this.squad) {
         const auction = this;
-        this.room.emit("game-over");
+        this.room.emit('game-over');
         this.users.forEach((u) => {
           dbUser.findOneAndUpdate(
             { username: u.user },
@@ -172,7 +172,7 @@ class Auction {
     this.confirm = 0;
   }
   init() {
-    this.room.emit("server-details", 3.8);
+    this.room.emit('server-details', 3.8);
   }
   next(squads, liveAuctions, room) {
     this.confirm++;
@@ -195,7 +195,7 @@ class Auction {
                 squads[this.squad].players[this.player].stats.bowling.length - 1
               ].value);
 
-        this.room.emit("server-details", currBid);
+        this.room.emit('server-details', currBid);
       }
     }
   }
@@ -205,7 +205,7 @@ class Auction {
     currentUser.addPlayer(player);
     currentUser.deduct(amount);
     this.confirm = 0;
-    this.room.emit("users", {
+    this.room.emit('users', {
       users: this.users,
     });
   }

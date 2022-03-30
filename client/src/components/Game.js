@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import PlayerCard from "./PlayerCard";
-import UserAccordian from "./UserAccordian";
-import { useHistory } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import PlayerCard from './PlayerCard';
+import UserAccordian from './UserAccordian';
+import { useHistory } from 'react-router-dom';
 
 const Game = ({ users, socket, room, user, initial }) => {
   const [timer, setTimer] = useState(-1);
-  const [bidder, setBidder] = useState("");
+  const [bidder, setBidder] = useState('');
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState(0);
   const [player, setPlayer] = useState(initial);
@@ -13,39 +13,39 @@ const Game = ({ users, socket, room, user, initial }) => {
   let history = useHistory();
 
   useEffect(() => {
-    socket.emit("fetch-details");
+    socket.emit('fetch-details');
 
-    socket.on("server-details", (data) => {
+    socket.on('server-details', (data) => {
       setAmount(data);
     });
   }, [socket]);
 
   useEffect(() => {
-    socket.on("display", (data) => {
+    socket.on('display', (data) => {
       setTimer(data.time);
     });
 
-    socket.on("bid", (data) => {
+    socket.on('bid', (data) => {
       setBidder(data.currentBidder.bidder);
       setAmount(data.currentBidder.bid);
     });
 
-    socket.on("bid-error", (data) => {
+    socket.on('bid-error', (data) => {
       setError(data.message);
     });
 
-    socket.on("player", (data) => {
+    socket.on('player', (data) => {
       setPlayer(data.player);
     });
 
-    socket.on("game-over", () => {
-      history.push("/auctions/played");
+    socket.on('game-over', () => {
+      history.push('/auctions/played');
     });
   }, [socket, history]);
 
   useEffect(() => {
     if (timer === 0) {
-      setBidder("");
+      setBidder('');
       setAmount(0);
       if (user.moderator) setNext(true);
       else next();
@@ -56,7 +56,7 @@ const Game = ({ users, socket, room, user, initial }) => {
 
   const bid = () => {
     if (timer > 0) {
-      socket.emit("bid", {
+      socket.emit('bid', {
         room,
         user: user.username,
       });
@@ -64,7 +64,7 @@ const Game = ({ users, socket, room, user, initial }) => {
   };
 
   const next = () => {
-    socket.emit("next", {
+    socket.emit('next', {
       room,
       user: user.username,
     });
@@ -72,53 +72,54 @@ const Game = ({ users, socket, room, user, initial }) => {
   };
 
   return (
-    <div className="game">
-      <div className="game-main">
-        {player ? <PlayerCard {...player} /> : ""}
-        <div className="game-main-content">
+    <div className='game'>
+      <div className='game-main'>
+        {player ? <PlayerCard {...player} /> : ''}
+        <div className='game-main-content'>
           <div
-            className={`game-timer ${timer > 0 ? "animate-timer" : ""} 
+            className={`game-timer ${timer > 0 ? 'animate-timer' : ''} 
           ${
             timer >= 7
-              ? "timer-green"
+              ? 'timer-green'
               : timer < 7 && timer >= 4
-              ? "timer-yellow"
+              ? 'timer-yellow'
               : timer < 4
-              ? "timer-red"
-              : ""
+              ? 'timer-red'
+              : ''
           }`}
           >
             {timer}
           </div>
-          <div className="game-info">
-            <div className="game-info-bidder">
-              <div className="same-line">
-                <p>Highest Bidder :</p> <p className="bidder">{bidder}</p>
+          <div className='game-info'>
+            <div className='game-info-bidder'>
+              <div className='same-line'>
+                <p>Highest Bidder :</p> <p className='bidder'>{bidder}</p>
               </div>
-              <div className="same-line">
-                <p>Bid Amount :</p> <p className="amount">{amount}cr</p>
+              <div className='same-line'>
+                <p>Bid Amount :</p>{' '}
+                <p className='amount'>{amount.toFixed(2)}cr</p>
               </div>
             </div>
-            <div className="game-info-budgets">
+            <div className='game-info-budgets'>
               Budgets Remaining :
               {users.map((user, index) => {
                 return (
                   !user.moderator && (
-                    <div className="same-line" key={index}>
-                      <p className="bidder">{user.user}</p>{" "}
-                      <p className="amount">{user.budget}cr</p>
+                    <div className='same-line' key={index}>
+                      <p className='bidder'>{user.user}</p>{' '}
+                      <p className='amount'>{user.budget}cr</p>
                     </div>
                   )
                 );
               })}
             </div>
-            <div className="game-buttons">
+            <div className='game-buttons'>
               {!user.moderator && (
                 <button
                   onClick={() => {
                     bid();
                   }}
-                  className="button"
+                  className='button'
                 >
                   Bid
                 </button>
@@ -128,23 +129,23 @@ const Game = ({ users, socket, room, user, initial }) => {
                   onClick={() => {
                     next();
                   }}
-                  className="button"
+                  className='button'
                 >
                   Next
                 </button>
               ) : (
-                ""
+                ''
               )}
             </div>
           </div>
         </div>
       </div>
-      <div className="users-info">
+      <div className='users-info'>
         {users.map((user) => {
           return <UserAccordian key={user.user} {...user} />;
         })}
       </div>
-      {error ? <div className="error">{error}</div> : ""}
+      {error ? <div className='error'>{error}</div> : ''}
     </div>
   );
 };
