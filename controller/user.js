@@ -12,11 +12,17 @@ class User {
   }
 
   deduct(amount) {
+    console.log(amount);
     if (amount > this.budget) {
-      throw new Error("Your budget does not allow you to bid");
+      throw new Error('Your budget does not allow you to bid');
     }
+    var m = Number((Math.abs(amount) * 100).toPrecision(15));
+    m = (Math.round(m) / 100) * Math.sign(amount);
+    amount = m;
     this.budget -= amount;
-    this.budget = (Math.ceil(this.budget * 100) / 100).toFixed(2);
+    m = Number((Math.abs(this.budget) * 100).toPrecision(15));
+    m = (Math.round(m) / 100) * Math.sign(this.budget);
+    this.budget = m;
   }
 
   getBudget() {
@@ -26,13 +32,13 @@ class User {
   addPlayer(player) {
     if (player.stats.role) {
       const role = player.stats.role.toLowerCase();
-      if (role.includes("wicket")) {
+      if (role.includes('wicket')) {
         this.wicketKeepers.push(player);
-      } else if (role.includes("all")) {
+      } else if (role.includes('all')) {
         this.allRounders.push(player);
-      } else if (role.includes("bat")) {
+      } else if (role.includes('bat')) {
         this.batsmen.push(player);
-      } else if (role.includes("bowl")) {
+      } else if (role.includes('bowl')) {
         this.bowlers.push(player);
       }
     } else {

@@ -128,7 +128,7 @@
             },
             {
               "label": "base",
-              "value": 2
+              "value": 2.0
             }
           ]
         }
@@ -819,7 +819,7 @@
             },
             {
               "label": "base",
-              "value": 4
+              "value": 4.0
             }
           ]
         }

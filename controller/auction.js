@@ -30,7 +30,7 @@ class Auction {
     }
     const user = this.findUser(bidder);
 
-    if (user.budget <= this.currentBid + 0.2) {
+    if (user.budget < this.currentBid) {
       return socket.emit('bid-error', {
         message: 'The current bid exceeds your budget.',
       });
@@ -40,7 +40,7 @@ class Auction {
         message: 'Max players limit reached.',
       });
     }
-    this.currentBid += 0.2;
+    this.currentBid = (this.currentBid * 100 + 20) / 100;
 
     this.currentBidder = bidder;
     this.resetTimer();
@@ -203,6 +203,9 @@ class Auction {
   addPlayer(player, amount) {
     const currentUser = this.findUser(this.currentBidder);
     currentUser.addPlayer(player);
+
+    amount -= 0.2;
+    console.log('Amount: ', amount);
     currentUser.deduct(amount);
     this.confirm = 0;
     this.room.emit('users', {
