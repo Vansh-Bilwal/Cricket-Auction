@@ -132,20 +132,6 @@ class Auction {
       this.player = 0;
       this.squad++;
       if (squads.length === this.squad) {
-        const auction = this;
-        this.room.emit('game-over');
-        this.users.forEach((u) => {
-          dbUser.findOneAndUpdate(
-            { username: u.user },
-            { $push: { auctions: { auction: auction.users } } },
-            (error, success) => {
-              if (error) {
-                console.log(error);
-              }
-            }
-          );
-        });
-        liveAuctions.delete(room);
         return true;
       }
     }
