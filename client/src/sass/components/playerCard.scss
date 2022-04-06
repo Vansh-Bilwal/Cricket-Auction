@@ -25,7 +25,7 @@
 
     &::before {
       position: absolute;
-      content: "";
+      content: '';
       width: 50%;
       height: 1.5%;
       top: 102%;
@@ -79,7 +79,9 @@
       &-value {
         color: $theme-color3;
       }
-
+      &-red {
+        color: red;
+      }
       &-label {
         border-left: 2px solid $hover-color;
         padding-left: 0.3rem;

@@ -1,19 +1,25 @@
 const PlayerStats = ({ stats, role }) => {
   return (
-    <div className="playerCard-info-stats">
-      <div className="playerCard-info-stats-title">{role}:</div>
+    <div className='playerCard-info-stats'>
+      <div className='playerCard-info-stats-title'>{role}:</div>
       {stats
         ? stats.map((stat, index) => {
             return (
-              <div key={index} className="playerCard-info-stat-container">
-                <span className="playerCard-info-stat-label">
+              <div key={index} className='playerCard-info-stat-container'>
+                <span className='playerCard-info-stat-label'>
                   {stat.label}:
                 </span>
-                <span className="playerCard-info-stat-value">{stat.value}</span>
+                <span
+                  className={`playerCard-info-stat-value ${
+                    stat.label === 'rating' ? 'playerCard-info-stat-red' : ''
+                  }`}
+                >
+                  {stat.value}
+                </span>
               </div>
             );
           })
-        : "First Timer"}
+        : 'First Timer'}
     </div>
   );
 };

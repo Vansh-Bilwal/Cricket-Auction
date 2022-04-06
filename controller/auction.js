@@ -7,7 +7,7 @@ class Auction {
     this.currentBidder = '';
     this.currentBid = 3.8;
     this.currentPlayer = '';
-    this.timer = 10;
+    this.timer = 25;
     this.interval = null;
     this.room = room;
     this.squad = 0;
@@ -168,7 +168,7 @@ class Auction {
     return true;
   }
   newresetTimer() {
-    this.timer = 10;
+    this.timer = 25;
     this.confirm = 0;
   }
   init() {
