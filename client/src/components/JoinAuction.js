@@ -1,4 +1,4 @@
-import Form from "./Form";
+import Form from './Form';
 
 const JoinAuction = ({
   socket,
@@ -11,13 +11,13 @@ const JoinAuction = ({
 }) => {
   const data = [
     {
-      type: "room",
-      title: "Room Id",
-      placeholder: "Enter the auction room id",
+      type: 'room',
+      title: 'Room Id',
+      placeholder: 'Enter the auction room id',
       onChange: (value) => {
         setRoom(value);
       },
-      icon: "",
+      icon: '',
       error: errors.room,
     },
   ];
@@ -29,7 +29,7 @@ const JoinAuction = ({
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    socket.emit("joinAuction", {
+    socket.emit('joinAuction', {
       username: user.username,
       room,
     });
@@ -39,7 +39,7 @@ const JoinAuction = ({
   return (
     <div>
       <Form
-        title="Join Auction"
+        title='Join Auction'
         data={data}
         onFormSubmit={handleSubmit}
         message={message}
