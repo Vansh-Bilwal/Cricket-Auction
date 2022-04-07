@@ -1,9 +1,9 @@
-import Bars from "./Bars";
-import { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { UserContext } from "../hooks/UserContext";
-import Loader from "./Loading.component";
-import { logout } from "../services/auth.service";
+import Bars from './Bars';
+import { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { UserContext } from '../hooks/UserContext';
+import Loader from './Loading.component';
+import { logout } from '../services/auth.service';
 
 const Navbar = () => {
   const [barState, setBarState] = useState(false);
@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const handleClick = async () => {
     if (!user) {
-      history.push("/login");
+      history.push('/login');
       return;
     }
 
@@ -20,42 +20,42 @@ const Navbar = () => {
     setUser(null);
   };
   return (
-    <header className="nav-container">
+    <header className='nav-container'>
       <img
-        className="nav-container-logo"
-        src="/Images/logo.png"
-        alt="Logo"
+        className='nav-container-logo'
+        src='/Images/logo.png'
+        alt='Logo'
       ></img>
       <nav
         className={
           barState
-            ? "nav-container-main activate"
-            : "nav-container-main deactivate"
+            ? 'nav-container-main activate'
+            : 'nav-container-main deactivate'
         }
       >
-        <Link to="/" className="nav-container-main-content">
+        <Link to='/' className='nav-container-main-content'>
           Home
         </Link>
 
-        <Link to="/auction" className="nav-container-main-content">
+        <Link to='/auction' className='nav-container-main-content'>
           Auction
         </Link>
-        <Link to="/auctions/played" className="nav-container-main-content">
+        {/* <Link to="/auctions/played" className="nav-container-main-content">
           Previous
-        </Link>
+        </Link> */}
       </nav>
 
-      <div className={barState ? "activate" : "deactivate"}>
+      <div className={barState ? 'activate' : 'deactivate'}>
         {!loading ? (
-          <button className="button" onClick={() => handleClick()}>
-            {user ? "Logout" : "Login"}
+          <button className='button' onClick={() => handleClick()}>
+            {user ? 'Logout' : 'Login'}
           </button>
         ) : (
-          <Loader size="2" />
+          <Loader size='2' />
         )}
       </div>
 
-      <div className="bar-container">
+      <div className='bar-container'>
         <Bars barState={barState} setBarState={setBarState} />
       </div>
     </header>
