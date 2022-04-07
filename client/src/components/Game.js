@@ -48,7 +48,7 @@ const Game = ({ users, socket, room, user, initial }) => {
       setBidder('');
       setAmount(0);
       if (user.moderator) setNext(true);
-      else next();
+      // else next();
     } else {
       setNext(false);
     }

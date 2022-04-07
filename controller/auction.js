@@ -162,7 +162,7 @@ class Auction {
   }
   next(squads, liveAuctions, room) {
     this.confirm++;
-    if (this.confirm >= this.users.length) {
+    if (this.confirm === 1) {
       if (!this.gameOver(squads, liveAuctions, room)) {
         this.newresetTimer();
         this.resetBid(squads);
