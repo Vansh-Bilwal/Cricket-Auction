@@ -40,9 +40,9 @@ const Navbar = () => {
         <Link to='/auction' className='nav-container-main-content'>
           Auction
         </Link>
-        {/* <Link to="/auctions/played" className="nav-container-main-content">
+        <Link to='/auctions/played' className='nav-container-main-content'>
           Previous
-        </Link> */}
+        </Link>
       </nav>
 
       <div className={barState ? 'activate' : 'deactivate'}>
