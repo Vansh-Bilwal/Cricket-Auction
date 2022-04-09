@@ -42,16 +42,17 @@ const Auction = (props) => {
 
   useEffect(() => {
     socket.on('existing-user', (data) => {
-      setUsers(data.users);
-      setRoom(data.room);
+      // setUsers(data.users);
+      // setRoom(data.room);
+      // setInitial(false);
+      // setDefaultPlayer(data.initial);
+      // if (data.started) {
+      //   setPlay(true);
+      // } else {
+      //   setCreated(true);
+      //   setMain(data.starter);
+      // }
       setInitial(false);
-      setDefaultPlayer(data.initial);
-      if (data.started) {
-        setPlay(true);
-      } else {
-        setCreated(true);
-        setMain(data.starter);
-      }
     });
 
     socket.on('no-existing-user', () => {
